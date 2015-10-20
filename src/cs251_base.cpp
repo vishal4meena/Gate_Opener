@@ -53,32 +53,14 @@ base_sim_t::~base_sim_t()
 
 void base_sim_t::mouse_up(const b2Vec2& p)
 {
-if (mouseJoint)
-  {
-    m_world->DestroyJoint(mouseJoint);
-    mouseJoint = NULL;
-  }
 } 
 
 void base_sim_t::mouse_down(const b2Vec2& p)
 {
- 
-    b2MouseJointDef* mouse_joint = new b2MouseJointDef;
-    mouse_joint->bodyA = b1;
-    mouse_joint->bodyB = sbody;
-    mouse_joint->maxForce = 1000*sbody->GetMass();
-    sbody->SetAwake(true);
-    mouse_joint->target = p;
-    mouseJoint = (b2MouseJoint*)m_world->CreateJoint(mouse_joint);
-  
 }
 
 void base_sim_t::mouse_move(const b2Vec2& p)
 {
- if (mouseJoint)
-  {
-    mouseJoint->SetTarget(p);
-  }
 }
 
 void base_sim_t::pre_solve(b2Contact* contact, const b2Manifold* oldManifold)
