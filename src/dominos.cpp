@@ -40,22 +40,15 @@ using namespace std;
 
 namespace cs251
 {
-  
-  /*! \fn dominos_t::dominos_t() 
-   *  \brief This is the constructor function.
-   *
-   *  This is the documentation block for the constructor. <br>
-   *  Documentation for the box2d methods and classes can be found <a href = "http://www.box2d.org/documentation.html">here</a>.
-  */		
-
+    
   dominos_t::dominos_t()
   {
     //Ground  
-    {  
-      b2Body* b1; 
+    { 
+      b2Body* b1;
       b2EdgeShape shape; 
       shape.Set(b2Vec2(-900.0f, 0.0f), b2Vec2(900.0f, 0.0f));
-      b2BodyDef bd;
+      b2BodyDef bd; 
       b1 = m_world->CreateBody(&bd); 
       b1->CreateFixture(&shape, 0.0f);
     }
@@ -64,33 +57,27 @@ namespace cs251
 
     //first ball
     {
+      b2Body* sbody;
       b2CircleShape circle;
       circle.m_radius = 0.6;
   
       b2FixtureDef ballfd;
       ballfd.shape = &circle;
       ballfd.density = 60.0f;
-  
-      ballfd.friction = 0.0f;
-
+      ballfd.friction = 50000.0f;
       ballfd.restitution = 0.0f;
       b2BodyDef ballbd;
       ballbd.type = b2_dynamicBody;
       ballbd.position.Set(-39.5f, 45.0f);
-  
-      b2Body* body;
-      body = m_world->CreateBody(&ballbd);
-      body->CreateFixture(&ballfd);
-
+      sbody = m_world->CreateBody(&ballbd);
+      sbody->CreateFixture(&ballfd);
     }
 
     /////////////////////////////////////////////
 
     //slant planks
     {
-  
-      b2Body* body;
-
+      b2Body* sbody;
       b2PolygonShape poly;
       b2Vec2 vertices[4];
       vertices[0].Set(0,0);
@@ -105,14 +92,12 @@ namespace cs251
       wedgefd.restitution = 0.0f;
       b2BodyDef wedgebd;
       wedgebd.position.Set(-42.2f, 42.5f);
-  
-      body = m_world->CreateBody(&wedgebd);
-      body->CreateFixture(&wedgefd);
+      sbody = m_world->CreateBody(&wedgebd);
+      sbody->CreateFixture(&wedgefd);
     }
 
     {
-      b2Body* body;
-
+      b2Body* sbody;
       b2PolygonShape poly;
       b2Vec2 vertices[4];
       vertices[0].Set(0,0);
@@ -127,13 +112,12 @@ namespace cs251
       wedgefd.restitution = 0.0f;
       b2BodyDef wedgebd;
       wedgebd.position.Set(-42.5f, 37.5f);
-  
-      body = m_world->CreateBody(&wedgebd);
-      body->CreateFixture(&wedgefd);
+      sbody = m_world->CreateBody(&wedgebd);
+      sbody->CreateFixture(&wedgefd);
     }
 
     {
-      b2Body* body;
+      b2Body* sbody;
       b2PolygonShape poly;
       b2Vec2 vertices[4];
       vertices[0].Set(0,0);
@@ -148,18 +132,15 @@ namespace cs251
       wedgefd.restitution = 0.0f;
       b2BodyDef wedgebd;
       wedgebd.position.Set(-35.5f,37.5f);
-      body = m_world->CreateBody(&wedgebd);
-      body->CreateFixture(&wedgefd);
+      sbody = m_world->CreateBody(&wedgebd);
+      sbody->CreateFixture(&wedgefd);
     }
-
 
     //////////////////////////////////////////////
 
     //plank-spring mass system
     {
-  
-      b2Body* body;
-
+      b2Body* sbody;
       b2PolygonShape poly;
       b2Vec2 vertices[4];
       vertices[0].Set(0,0);
@@ -174,18 +155,14 @@ namespace cs251
       wedgefd.restitution = 0.0f;
       b2BodyDef wedgebd;
       wedgebd.position.Set(-33.0f, 32.5f);
-  
-      body = m_world->CreateBody(&wedgebd);
-      body->CreateFixture(&wedgefd);
-
+      sbody = m_world->CreateBody(&wedgebd);
+      sbody->CreateFixture(&wedgefd);
     }
 
     ////////////////////////////////////////////////     
 
     {
-  
-      b2Body* body;
-
+      b2Body* sbody;
       b2PolygonShape poly;
       b2Vec2 vertices[4];
       vertices[0].Set(0,0);
@@ -200,18 +177,14 @@ namespace cs251
       wedgefd.restitution = 0.0f;
       b2BodyDef wedgebd;
       wedgebd.position.Set(-33.0f, 32.7f);
-  
-      body = m_world->CreateBody(&wedgebd);
-      body->CreateFixture(&wedgefd);
-
+      sbody = m_world->CreateBody(&wedgebd);
+      sbody->CreateFixture(&wedgefd);
     }
 
     //////////////////////////////////////////////////////////
 
     {
-  
-      b2Body* body;
-
+      b2Body* sbody;
       b2PolygonShape poly;
       b2Vec2 vertices[4];
       vertices[0].Set(0,0);
@@ -226,19 +199,15 @@ namespace cs251
       wedgefd.restitution = 0.0f;
       b2BodyDef wedgebd;
       wedgebd.position.Set(-31.0f, 32.7f);
-  
-      body = m_world->CreateBody(&wedgebd);
-      body->CreateFixture(&wedgefd);
-
+      sbody = m_world->CreateBody(&wedgebd);
+      sbody->CreateFixture(&wedgefd);
     }
 
 
     //////////////////////////////////////////////////////////
 
-  
     //http://www.emanueleferonato.com/2009/01/05/box2d-joints-distance-joint/
     //http://www.learn-cocos2d.com/api-ref/1.0/Box2D/html/classb2_distance_joint.html
-
 
     //spring mass system 
     {
@@ -286,7 +255,6 @@ namespace cs251
       b2PolygonShape bs3;
       bs3.SetAsBox(1.5,1, b2Vec2(0.0f,0.0f), 0);
       fd3->shape = &bs3;
-  
 
       b2FixtureDef *fd4 = new b2FixtureDef;
       fd4->density = 10.0;
@@ -325,7 +293,7 @@ namespace cs251
 
     //small stand-second ball
     {
-      b2Body* body;
+      b2Body* sbody;
       b2PolygonShape poly;
       b2Vec2 vertices[4];
       vertices[0].Set(0,0);
@@ -340,8 +308,8 @@ namespace cs251
       wedgefd.restitution = -1000.0f;
       b2BodyDef wedgebd;
       wedgebd.position.Set(-12.25f, 32.7f);
-      body = m_world->CreateBody(&wedgebd);
-      body->CreateFixture(&wedgefd);
+      sbody = m_world->CreateBody(&wedgebd);
+      sbody->CreateFixture(&wedgefd);
     }
 
     /////////////////////////////////////
@@ -349,20 +317,20 @@ namespace cs251
     //second ball
 
     {
+      b2Body* sbody;
       b2CircleShape circle;
       circle.m_radius = 0.6f;
   
       b2FixtureDef ballfd;
       ballfd.shape = &circle;
-      ballfd.density = 700.0f;
+      ballfd.density = 500.0f;
       ballfd.friction = 0.0f;
       ballfd.restitution = -2.0f;
       b2BodyDef ballbd;
       ballbd.type = b2_dynamicBody;
       ballbd.position.Set(-11.875f,33.675f);
-      b2Body* body;
-      body = m_world->CreateBody(&ballbd);
-      body->CreateFixture(&ballfd);
+      sbody = m_world->CreateBody(&ballbd);
+      sbody->CreateFixture(&ballfd);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -510,28 +478,11 @@ namespace cs251
     }
 
 
-    {
-      b2Body* sbody; 
-      b2CircleShape circle;
-      circle.m_radius = 0.6f;
-  
-      b2FixtureDef ballfd;
-      ballfd.shape = &circle;
-      ballfd.density = 500.0f;
-      ballfd.friction = 0.0f;
-      ballfd.restitution = -2.0f;
-      b2BodyDef ballbd;
-      ballbd.type = b2_dynamicBody;
-      ballbd.position.Set(-11.875f,33.675f);
-      sbody = m_world->CreateBody(&ballbd);
-      sbody->CreateFixture(&ballfd);
-    }
-
-  
     ////////////////////////////////////
         
-    //fourth ball
+    //third ball
     {
+      b2Body* sbody;
       b2CircleShape circle;
       circle.m_radius = 0.6;
       
@@ -543,13 +494,11 @@ namespace cs251
       b2BodyDef ballbd;
       ballbd.type = b2_dynamicBody;
       ballbd.position.Set(-32.5f, 24.6f);
-      b2Body* body;
-      body = m_world->CreateBody(&ballbd);
-      body->CreateFixture(&ballfd);
+      sbody = m_world->CreateBody(&ballbd);
+      sbody->CreateFixture(&ballfd);
     }
 
-
-///////////////////////////////////////////////
+    ///////////////////////////////////////////////
 
     //plank-bucket-full of balls
     {
@@ -592,6 +541,7 @@ namespace cs251
 
     //v shape bucket full of balls
     {
+      b2Body* sbody;
       b2BodyDef *bd = new b2BodyDef;
       bd->type = b2_dynamicBody;
       bd->position.Set(-19,20);
@@ -665,13 +615,11 @@ namespace cs251
         b2BodyDef ballbd;
         ballbd.type = b2_dynamicBody;
         ballbd.position.Set(-17.95,20.3+ i*1);
-        b2Body* body1;
-        body1 = m_world->CreateBody(&ballbd);
-        body1->CreateFixture(&ballfd);
+        sbody = m_world->CreateBody(&ballbd);
+        sbody->CreateFixture(&ballfd);
         ballbd.position.Set(-18.55,20.3+ i*1);
-        b2Body* body2;
-        body2 = m_world->CreateBody(&ballbd);
-        body2->CreateFixture(&ballfd);
+        sbody = m_world->CreateBody(&ballbd);
+        sbody->CreateFixture(&ballfd);
       }
     }
 
@@ -823,8 +771,6 @@ namespace cs251
 
     ///////////////////////////////////////////
 
-
-    
     //pendulums
     {
       b2CircleShape circle;
@@ -879,7 +825,153 @@ namespace cs251
         m_world->CreateJoint(&jd1);
       }
     }  
+
+    /////////////////////////////////////////////////
+
+    //another revolving plank
+    {
+      b2PolygonShape shape;
+      shape.SetAsBox(2.0f, 0.2f);
+    
+      b2BodyDef bd;
+      bd.position.Set(27.9f, 13.7f);
+      bd.type = b2_dynamicBody;
+      b2Body* body = m_world->CreateBody(&bd);
+      b2FixtureDef *fd = new b2FixtureDef;
+      fd->density = 0.0001f;
+      fd->shape = new b2PolygonShape;
+      fd->shape = &shape;
+      body->CreateFixture(fd);
+
+      b2PolygonShape shape2;
+      b2BodyDef bd2;
+      bd2.position.Set(27.9f, 13.7f);
+      b2Body* body2 = m_world->CreateBody(&bd2);
+
+      b2RevoluteJointDef jointDef;
+      jointDef.bodyA = body;
+      jointDef.bodyB = body2;
+      jointDef.localAnchorA.Set(0,0);
+      jointDef.localAnchorB.Set(0,0);
+      //jointDef.collideConnected = true;
+      m_world->CreateJoint(&jointDef);
+    }
+    
+    //////////////////////////////////////
+
+    //bar
+    {
+      b2PolygonShape shape;
+      shape.SetAsBox(1.0f, 0.2f);
+    
+      b2BodyDef bd;
+      bd.position.Set(27.9f, 14.1f);
+      bd.type = b2_dynamicBody;
+      b2Body* body = m_world->CreateBody(&bd);
+      b2FixtureDef *fd = new b2FixtureDef;
+      fd->density = 0.01f;
+      fd->shape = new b2PolygonShape;
+      fd->shape = &shape;
+      body->CreateFixture(fd);
+    }
+
+    //////////////////////////////////////
+
+    //another pulley system
+    {
+      b2BodyDef *bd = new b2BodyDef;
+      bd->type = b2_dynamicBody;
+      bd->position.Set(28.9,10);
+      bd->fixedRotation = true;
+      
+      //The Bar
+      b2FixtureDef *fd1 = new b2FixtureDef;
+      fd1->density =0.1;
+      fd1->friction = 0.5;
+      fd1->restitution = 0.0f;
+      fd1->shape = new b2PolygonShape;
+      b2PolygonShape bs1;
+      bs1.SetAsBox(2,0.2);
+      fd1->shape = &bs1;
+      b2Body* box1 = m_world->CreateBody(bd);
+      box1->CreateFixture(fd1);
+
+      //The gate
+      bd->position.Set(38.9,5);  
+      fd1->density =40.0f;    
+      b2Body* box2 = m_world->CreateBody(bd);
+      b2FixtureDef *fd2 = new b2FixtureDef;
+      fd2->density = 0.016f;
+      fd2->friction = 0.5;
+      fd2->restitution = 0.0f;
+      fd2->shape = new b2PolygonShape;
+      b2PolygonShape bs2;
+      bs2.SetAsBox(0.5,5);
+      fd2->shape = &bs2;
+      box2->CreateFixture(fd2);
+
+      // The pulley joint
+      b2PulleyJointDef* myjoint = new b2PulleyJointDef();
+      b2Vec2 worldAnchorOnBody1(28.9,10 ); 
+      b2Vec2 worldAnchorOnBody2(38.9, 10);
+      b2Vec2 worldAnchorGround1(28.9,12); 
+      b2Vec2 worldAnchorGround2(38.9, 12);
+      float32 ratio = 1.0f;
+      myjoint->Initialize(box1, box2, worldAnchorGround1, worldAnchorGround2, box1->GetWorldCenter(), box2->GetWorldCenter(), ratio);
+      m_world->CreateJoint(myjoint);
+    }
+
+    ///////////////////////////////////////
+
+    //www/iforce2d.net/b2dtut/bodies
+    //http://stackoverflow.com/questions/8007170/cocos2d-box2d-multiple-b2circle-shape-fixture-for-one-body-with-positioning
+
+    //the car
+    {
+      b2BodyDef *bd = new b2BodyDef;
+      bd->type = b2_dynamicBody;
+      bd->position.Set(-45,3);
+      //bd->fixedRotation = true;
+      
+      //The open box
+
+      b2FixtureDef *fd1 = new b2FixtureDef;
+      fd1->density = 10.0;
+      fd1->friction = 0.0;
+      fd1->restitution = 0.0f;
+      fd1->shape = new b2PolygonShape;
+      b2PolygonShape bs1;
+      bs1.SetAsBox(3,1.5, b2Vec2(0.0f,0.0f), 0);
+      fd1->shape = &bs1;
+
+      b2FixtureDef *fd2 = new b2FixtureDef;
+      fd2->density = 10.0;
+      fd2->friction = 0.0;
+      fd2->restitution = 0.0f;
+      fd2->shape = new b2CircleShape;
+      b2CircleShape circle;
+      circle.m_radius = 0.75f;
+      circle.m_p.Set(-2,-2.25);
+      fd2->shape = &circle;
+
+      b2FixtureDef *fd3 = new b2FixtureDef;
+      fd3->density = 10.0;
+      fd3->friction = 0.0;
+      fd3->restitution = 0.0f;
+      fd3->shape = new b2CircleShape;
+      b2CircleShape circle2;
+      circle2.m_radius = 0.75f;
+      circle2.m_p.Set(2,-2.25);
+      fd3->shape = &circle2;
+
+       
+      b2Body* box1 = m_world->CreateBody(bd);
+      box1->CreateFixture(fd1);
+      box1->CreateFixture(fd2);
+      box1->CreateFixture(fd3);
+
+      box1->SetLinearVelocity(b2Vec2(1.477,0.0));
+    }
   }
   sim_t *sim = new sim_t("Dominos", dominos_t::create);
 }
-
