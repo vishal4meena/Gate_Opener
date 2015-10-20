@@ -9,7 +9,13 @@ ECHO	= /bin/echo
 CAT	= cat
 PRINTF	= printf
 SED	= sed
+GPROF	= gprof
+PYTHON 	= python3
+MV 	= mv
+DOT 	= dot
 DOXYGEN = doxygen
+PDFLATEX= pdflatex
+BIBTEX	= bibtex
 ######################################
 # Project Name (generate executable with this name)
 TARGET = cs251_base
@@ -21,6 +27,8 @@ SRCDIR = $(PROJECT_ROOT)/src
 OBJDIR = $(PROJECT_ROOT)/obj
 BINDIR = $(PROJECT_ROOT)/bin
 DOCDIR = $(PROJECT_ROOT)/doc
+PYTHON_FILE = $(PROJECT_ROOT)/gprof2dot.py
+REPORTDIR = $(DOCDIR)/project_report
 
 # Library Paths
 BOX2D_ROOT=$(EXTERNAL_ROOT)
@@ -31,9 +39,9 @@ GL_ROOT=/usr/include/
 LIBS = -lBox2D -lglui -lglut -lGLU -lGL
 
 # Compiler and Linker flags
-CPPFLAGS =-g -O3 -Wall -fno-strict-aliasing
+CPPFLAGS =-g -O3 -Wall -pg -fno-strict-aliasing
 CPPFLAGS+=-I $(BOX2D_ROOT)/include -I $(GLUI_ROOT)/include
-LDFLAGS+=-L $(BOX2D_ROOT)/lib -L $(GLUI_ROOT)/lib
+LDFLAGS+=-pg -L $(BOX2D_ROOT)/lib -L $(GLUI_ROOT)/lib
 
 ######################################
 
@@ -57,7 +65,7 @@ INCS := $(wildcard $(SRCDIR)/*.hpp)
 OBJS := $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
 
-.PHONY: all setup doc clean distclean
+.PHONY: all setup doc clean distclean profile report release
 
 all: setup $(BINDIR)/$(TARGET)
 
@@ -90,7 +98,7 @@ $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	fi;
 	@$(RM) -f temp.log temp.err
 
-doc:
+codeDoc:
 	@$(ECHO) -n "Generating Doxygen Documentation ...  "
 	@$(RM) -rf doc/html
 	@$(DOXYGEN) $(DOCDIR)/Doxyfile 2 > /dev/null
@@ -102,4 +110,29 @@ clean:
 	@$(ECHO) "Done"
 
 distclean: clean
-	@$(RM) -rf $(BINDIR) $(DOCDIR)/html
+	@$(RM) -rf $(BINDIR) $(DOCDIR)/html $(DOCDIR)/profile.png $(DOCDIR)/*.pdf
+
+profile:
+	@$(ECHO) "Run the simulation till where profiling needs to be done..."
+	@$(BINDIR)/$(TARGET)
+	@$(MV) gmon.out $(BINDIR)/gmon.out
+	@$(GPROF) $(BINDIR)/$(TARGET) $(BINDIR)/gmon.out > gprof_output.txt
+	@$(PYTHON) $(PYTHON_FILE) gprof_output.txt > $(DOCDIR)/profile.dot
+	@$(DOT) -Tpng $(DOCDIR)/profile.dot > $(DOCDIR)/profile.png
+	@$(RM) $(DOCDIR)/*.dot gprof_output.txt
+	@$(ECHO) "Call graph output in /doc/profile.png"
+
+report:
+	@$(ECHO) "Press Enter until done..."
+	@cd $(REPORTDIR); \
+	$(PDFLATEX) report.tex > /dev/null ;$(BIBTEX) report > /dev/null;$(PDFLATEX) report.tex > /dev/null ; cd $(PROJECT_ROOT);
+	@$(RM) -f $(REPORTDIR)/*.out $(REPORTDIR)/*.blg $(REPORTDIR)/*.aux $(REPORTDIR)/*.bbl $(REPORTDIR)/*.log
+	@$(MV) $(REPORTDIR)/report.pdf $(DOCDIR)/report.pdf
+	@$(ECHO) "Report files written in doc."
+	@cd $(REPORTDIR); $(PDFLATEX) presentation.tex > /dev/null; cd $(PROJECT_ROOT);
+	@$(RM) -f $(REPORTDIR)/*.out $(REPORTDIR)/*.aux $(REPORTDIR)/*.log $(REPORTDIR)/*.toc $(REPORTDIR)/*.nav $(REPORTDIR)/*.snm
+	@$(MV) $(REPORTDIR)/presentation.pdf $(DOCDIR)/presentation.pdf
+	@$(ECHO) "Presentation files written in doc."
+	
+release: clean distclean
+	

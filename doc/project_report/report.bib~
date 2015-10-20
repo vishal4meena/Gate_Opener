@@ -1,0 +1,49 @@
+
+
+@misc{spring_mass_system,
+    author = {Cocos 2D},
+    howpublished = {\url{http://www.learn-cocos2d.com/api-ref/1.0/Box2D/html/classb2_distance_joint.html}},
+}
+
+@misc{springmasssystem,
+    author = {Emanuele Feronato},
+    howpublished = {\url{http://www.emanueleferonato.com/2009/01/05/box2d-joints-distance-joint/}},
+}
+
+@misc{box2d,
+    author = {iforce2d},
+    howpublished = {\url {http://www.iforce2d.net/b2dtut}},
+}
+
+@misc{car,
+    author = {iforce2d},
+    howpublished = {\url{www/iforce2d.net/b2dtut/bodies}},
+}
+
+@misc{abcd,
+    author = {StackOverflow},
+    howpublished = {\url {http://www.stackoverflow.com}},
+}
+
+@misc{carr,
+    author = {StackOverflow},
+    howpublished = {\url{http://www.stackoverflow.com/questions/8007170/cocos2d-box2d-multiple-b2circle-shape-fixture-for-one-body-with-positioning}},
+}
+
+@misc{rube,
+    author = {Youtube},
+    howpublished = {\url {https://www.youtube.com/watch?v=uHko-M2lGOU}},
+}
+
+@misc{elastic_collision,
+    author = {Box2D},
+    howpublished = {\url {http://www.box2d.org/forum/viewtopic.php?f=3&t=7716}},
+}
+
+@misc{general,
+    author = {Box2D},
+    howpublished = {\url {http://www.box2d.org/manual.html}},
+}
+
+
+
