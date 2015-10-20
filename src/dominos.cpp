@@ -40,8 +40,7 @@ using namespace std;
 
 namespace cs251
 {
-  b2Body* b1;
-  //b2Body* sbody;
+  
   /*! \fn dominos_t::dominos_t() 
    *  \brief This is the constructor function.
    *
@@ -155,6 +154,7 @@ namespace cs251
   {
     //Ground  
     {      
+      b2Body* b1;
       b2EdgeShape shape; 
       shape.Set(b2Vec2(-900.0f, -5.0f), b2Vec2(900.0f, -5.0f));
       b2BodyDef bd;

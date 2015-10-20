@@ -26,8 +26,8 @@ namespace cs251
   cs251::sim_t* entry;
   cs251::base_sim_t* test;
   cs251::settings_t settings;
-  int32 width = 640;
-  int32 height = 480;
+  int32 width = 1280;
+  int32 height = 720;
   int32 frame_period = 16;
   int32 main_window;
   float settings_hz = 60.0;
